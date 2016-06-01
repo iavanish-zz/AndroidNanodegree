@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/title"
+        android:textColor="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="My Nanodegree Apps!" />
+
+    <Button
+        android:id="@+id/project1"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="20dp"
+        android:text="POPULAR MOVIES" />
+
+    <Button
+        android:id="@+id/project2"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/project1"
+        android:layout_marginTop="20dp"
+        android:text="STOCK HAWK" />
+
+    <Button
+        android:id="@+id/project3"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/project2"
+        android:layout_marginTop="20dp"
+        android:text="BUILD IT BIGGER" />
+
+    <Button
+        android:id="@+id/project4"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/project3"
+        android:layout_marginTop="20dp"
+        android:text="MAKE YOUR APP MATERIAL" />
+
+    <Button
+        android:id="@+id/project5"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/project4"
+        android:layout_marginTop="20dp"
+        android:text="GO UBIQUITOUS" />
+
+    <Button
+        android:id="@+id/project6"
+        android:textColor="#FFFFFF"
+        android:background="#2E3D49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignRight="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/project5"
+        android:layout_marginTop="20dp"
+        android:text="CAPSTONE" />
+
+</RelativeLayout>
