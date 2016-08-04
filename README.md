@@ -1,2 +1,2 @@
-# Android_Nanodegree
+# AndroidNanodegree
 Udacity's Android Developer Nanodegree projects
