@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">Popular Movies</string>
+
+    <string-array name="dropdown">
+        <item>Most Popular</item>
+        <item>Top Rated</item>
+    </string-array>
+
+    <string name="apiKey"></string>
+
+    <string name="popular_url">http://api.themoviedb.org/3/movie/popular?api_key=</string>
+    <string name="top_rated_url">http://api.themoviedb.org/3/movie/top_rated?api_key=</string>
+
+    <string name="posterURL">http://image.tmdb.org/t/p/w342/</string>
+
+</resources>
