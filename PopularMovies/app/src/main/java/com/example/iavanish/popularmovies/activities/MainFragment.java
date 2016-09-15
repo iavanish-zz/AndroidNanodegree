@@ -22,27 +22,23 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.iavanish.popularmovies.R;
 import com.example.iavanish.popularmovies.entities.Movie;
+import com.example.iavanish.popularmovies.entities.MoviesList;
 import com.example.iavanish.popularmovies.util.ImageAdapter;
-import com.example.iavanish.popularmovies.util.MoviesList;
+import com.example.iavanish.popularmovies.util.NetworkConnection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
 public class MainFragment extends Fragment implements ActionBar.OnNavigationListener {
 
     private Context context;
-
     private ActionBar actionBar;
-
     private static MoviesList movies;
-
     private static GridView gridView;
-
     private View view;
 
     public static class MyFragment extends Fragment {
+
         public static final String ARG_SECTION_NUMBER = "";
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,8 +74,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
 
                         gridView.setAdapter(new ImageAdapter(getActivity(), movies));
                         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            public void onItemClick(AdapterView<?> parent, View v,
-                                                    int position, long id) {
+                            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                                 Bundle args = new Bundle();
                                 args.putInt("MovieIndex", position);
                                 ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(args);
@@ -93,7 +88,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.err.println("That didn't work!");
+                    System.err.println("Something went wrong while retrieving data from theMovieDB!");
                 }
             });
 
@@ -103,28 +98,18 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
         }
     }
 
-    private OnFragmentInteractionListener mListener;
-
-    public MainFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        if(!isOnline()) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if(!NetworkConnection.isOnline()) {
             Toast.makeText(context, "Internet connection is not available. Use the app when the device is connected to internet", Toast.LENGTH_SHORT).show();
         }
-
         else {
+            view = inflater.inflate(R.layout.fragment_main, container, false);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
             final String[] dropdownValues = getResources().getStringArray(R.array.dropdown);
@@ -132,7 +117,6 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(adapter, this);
         }
-
         return view;
     }
 
@@ -150,24 +134,6 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
         return true;
     }
 
-    public boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
-        catch(InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -175,14 +141,8 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
         actionBar = ((ActionBarActivity)this.context).getSupportActionBar();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Bundle args);
     }
+
 }

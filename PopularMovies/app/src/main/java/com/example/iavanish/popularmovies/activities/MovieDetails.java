@@ -1,13 +1,12 @@
 package com.example.iavanish.popularmovies.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.iavanish.popularmovies.R;
 
-public class MovieDetails extends AppCompatActivity implements MovieDetailsFragment.OnFragmentInteractionListener {
+public class MovieDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +18,7 @@ public class MovieDetails extends AppCompatActivity implements MovieDetailsFragm
         MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
         movieDetailsFragment.setArguments(args);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.right_container, movieDetailsFragment)
-                .commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.movie_details_container, movieDetailsFragment).commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-    }
 }

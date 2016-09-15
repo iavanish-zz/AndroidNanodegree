@@ -1,6 +1,4 @@
-package com.example.iavanish.popularmovies.util;
-
-import com.example.iavanish.popularmovies.entities.Movie;
+package com.example.iavanish.popularmovies.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,4 +25,5 @@ public class MoviesList {
         }
         return instance;
     }
+
 }

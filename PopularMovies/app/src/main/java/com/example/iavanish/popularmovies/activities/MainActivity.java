@@ -15,15 +15,15 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnFr
         setContentView(R.layout.activity_main);
 
         Fragment mainFragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.left_container, mainFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment).commit();
     }
 
     @Override
     public void onFragmentInteraction(Bundle args) {
-        if (findViewById(R.id.right_container) != null) {
+        if (findViewById(R.id.movie_details_container) != null) {
             Fragment movieDetailsFragment = new MovieDetailsFragment();
             movieDetailsFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.right_container, movieDetailsFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.movie_details_container, movieDetailsFragment).commit();
         }
         else {
             Intent intent = new Intent(this, MovieDetails.class);

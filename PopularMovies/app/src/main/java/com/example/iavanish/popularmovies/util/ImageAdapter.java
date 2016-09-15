@@ -6,17 +6,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.iavanish.popularmovies.R;
+import com.example.iavanish.popularmovies.entities.MoviesList;
 import com.squareup.picasso.Picasso;
 
 /**
  * Created by iavanish on 10/8/16.
  */
 public class ImageAdapter extends BaseAdapter {
-    private Context mContext;
+
+    private Context context;
     private MoviesList movies;
 
-    public ImageAdapter(Context c, MoviesList movies) {
-        mContext = c;
+    public ImageAdapter(Context context, MoviesList movies) {
+        this.context = context;
         this.movies = movies;
     }
 
@@ -32,19 +35,18 @@ public class ImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-        } else {
+            imageView = new ImageView(context);
+        }
+        else {
             imageView = (ImageView) convertView;
         }
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        String posterURL = "http://image.tmdb.org/t/p/w500/" + movies.movies.get(position).getPoster_path();
-        //String posterURL = "http://image.tmdb.org/t/p/w342/mFb0ygcue4ITixDkdr7wm1Tdarx.jpg";
-        Picasso.with(mContext).load(posterURL).into(imageView);
+        String posterURL = context.getResources().getString(R.string.posterURL) + movies.movies.get(position).getPoster_path();
+        Picasso.with(context).load(posterURL).into(imageView);
 
         return imageView;
     }

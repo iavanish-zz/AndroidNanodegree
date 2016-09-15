@@ -8,13 +8,13 @@
     tools:context="com.example.iavanish.popularmovies.activities.MainActivity">
 
     <FrameLayout
-        android:id="@+id/left_container"
+        android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4" />
 
     <FrameLayout
-        android:id="@+id/right_container"
+        android:id="@+id/movie_details_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4" />

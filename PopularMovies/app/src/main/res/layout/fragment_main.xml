@@ -18,12 +18,11 @@
             android:id="@+id/gridOfMovies"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:numColumns="2"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="0dp"
+            android:horizontalSpacing="0dp"
             android:layout_gravity="center_horizontal"
             android:stretchMode="columnWidth"
-            android:rowCount="25"
             />
 
     </ScrollView>
