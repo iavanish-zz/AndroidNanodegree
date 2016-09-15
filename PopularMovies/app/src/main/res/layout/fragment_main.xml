@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <GridView
+            android:id="@+id/gridOfMovies"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_gravity="center_horizontal"
+            android:stretchMode="columnWidth"
+            android:rowCount="25"
+            />
+
+    </ScrollView>
+
+</LinearLayout>

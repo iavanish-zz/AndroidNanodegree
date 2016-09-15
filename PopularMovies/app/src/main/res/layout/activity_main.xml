@@ -1,31 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    tools:context="com.example.iavanish.popularmovies.activities.MainActivity">
 
     <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </FrameLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <GridView
-            android:id="@+id/gridView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:numColumns="2"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:layout_gravity="center_horizontal"
-            android:stretchMode="columnWidth"
-            android:rowCount="25"
-            />
-
-    </ScrollView>
+        android:id="@+id/left_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4" />
 
 </LinearLayout>
