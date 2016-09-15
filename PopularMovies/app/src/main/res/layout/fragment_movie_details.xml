@@ -17,6 +17,15 @@
             android:layout_gravity="center_horizontal">
         </ImageView>
 
+        <CheckBox
+            android:id="@+id/favourite"
+            android:text="Add as favourite"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </CheckBox>
+
         <TextView
             android:id="@+id/showDetails"
             android:layout_width="fill_parent"

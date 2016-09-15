@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +20,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.iavanish.popularmovies.R;
-import com.example.iavanish.popularmovies.entities.Movie;
+import com.example.iavanish.popularmovies.db.AccessDatabase;
 import com.example.iavanish.popularmovies.entities.MoviesList;
 import com.example.iavanish.popularmovies.util.ImageAdapter;
+import com.example.iavanish.popularmovies.util.JSONParser;
 import com.example.iavanish.popularmovies.util.NetworkConnection;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class MainFragment extends Fragment implements ActionBar.OnNavigationListener {
 
@@ -45,57 +42,48 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
             String url;
             MoviesList.resetInstance();
             movies = MoviesList.getInstance();
-            if(getArguments().getInt(ARG_SECTION_NUMBER) == 0) {
-                url = getResources().getString(R.string.popular_url) + getResources().getString(R.string.apiKey);
+            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+                movies = new AccessDatabase(getActivity()).getMovies(movies);
+                gridView = updateGrid(gridView, movies, getActivity());
             }
             else {
-                url = getResources().getString(R.string.top_rated_url) + getResources().getString(R.string.apiKey);
+                if (getArguments().getInt(ARG_SECTION_NUMBER) == 0) {
+                    url = getResources().getString(R.string.popular_url) + getResources().getString(R.string.apiKey);
+                } else {
+                    url = getResources().getString(R.string.top_rated_url) + getResources().getString(R.string.apiKey);
+                }
+
+                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        movies = new JSONParser().getMovies(movies, response);
+                        gridView = updateGrid(gridView, movies, getActivity());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.err.println("Something went wrong while retrieving data from theMovieDB!");
+                    }
+                });
+
+                queue.add(stringRequest);
             }
-
-            RequestQueue queue = Volley.newRequestQueue(getActivity());
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject json_object = new JSONObject(response);
-                        JSONArray json_array = json_object.getJSONArray("results");
-                        int n = json_array.length();
-                        for(int i = 0; i < n; i++) {
-                            JSONObject tempJSON = json_array.getJSONObject(i);
-                            String original_title = tempJSON.getString("original_title");
-                            String poster_path = tempJSON.getString("poster_path");
-                            String overview = tempJSON.getString("overview");
-                            String vote_average = tempJSON.getString("vote_average");
-                            String release_date = tempJSON.getString("release_date");
-                            Movie tempMovie = new Movie(original_title, poster_path, overview, vote_average, release_date);
-                            movies.movies.add(tempMovie);
-                        }
-                        Log.d("Movie response", response);
-
-                        gridView.setAdapter(new ImageAdapter(getActivity(), movies));
-                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                                Bundle args = new Bundle();
-                                args.putInt("MovieIndex", position);
-                                ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(args);
-                            }
-                        });
-                    }
-                    catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.err.println("Something went wrong while retrieving data from theMovieDB!");
-                }
-            });
-
-            queue.add(stringRequest);
 
             return gridView;
         }
+    }
+
+    private static GridView updateGrid(GridView gridView, MoviesList movies, final Context context) {
+        gridView.setAdapter(new ImageAdapter(context, movies));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Bundle args = new Bundle();
+                args.putInt("MovieIndex", position);
+                ((OnFragmentInteractionListener) context).onFragmentInteraction(args);
+            }
+        });
+        return gridView;
     }
 
     @Override

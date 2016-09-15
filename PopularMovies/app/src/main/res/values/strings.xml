@@ -5,6 +5,7 @@
     <string-array name="dropdown">
         <item>Most Popular</item>
         <item>Top Rated</item>
+        <item>Favourites</item>
     </string-array>
 
     <string name="apiKey"></string>
@@ -14,5 +15,7 @@
 
     <string name="posterURL">http://image.tmdb.org/t/p/w500/</string>
     <string name="bigPosterURL">http://image.tmdb.org/t/p/w780/</string>
+
+    <string name="database">popular_movies_db</string>
 
 </resources>
