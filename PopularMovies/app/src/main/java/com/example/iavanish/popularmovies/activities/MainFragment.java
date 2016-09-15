@@ -1,8 +1,6 @@
 package com.example.iavanish.popularmovies.activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -82,9 +80,9 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
                         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             public void onItemClick(AdapterView<?> parent, View v,
                                                     int position, long id) {
-                                Intent intent = new Intent(getActivity(), MovieDetails.class);
-                                intent.putExtra("MovieIndex", position);
-                                startActivity(intent);
+                                Bundle args = new Bundle();
+                                args.putInt("MovieIndex", position);
+                                ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(args);
                             }
                         });
                     }
@@ -185,6 +183,6 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Bundle args);
     }
 }

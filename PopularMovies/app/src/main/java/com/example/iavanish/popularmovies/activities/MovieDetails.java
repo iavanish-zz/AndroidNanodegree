@@ -15,10 +15,7 @@ public class MovieDetails extends AppCompatActivity implements MovieDetailsFragm
         setContentView(R.layout.activity_movie_details);
 
         Intent intent = getIntent();
-        int movieIndex = intent.getIntExtra("MovieIndex", 0);
-
-        Bundle args = new Bundle();
-        args.putInt("MovieIndex", movieIndex);
+        Bundle args = intent.getExtras();
         MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
         movieDetailsFragment.setArguments(args);
 

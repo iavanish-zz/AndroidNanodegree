@@ -1,6 +1,6 @@
 package com.example.iavanish.popularmovies.activities;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +19,17 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnFr
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(Bundle args) {
+        if (findViewById(R.id.right_container) != null) {
+            Fragment movieDetailsFragment = new MovieDetailsFragment();
+            movieDetailsFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.right_container, movieDetailsFragment).commit();
+        }
+        else {
+            Intent intent = new Intent(this, MovieDetails.class);
+            intent.putExtras(args);
+            startActivity(intent);
+        }
     }
 
 }
