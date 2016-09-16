@@ -79,16 +79,16 @@ public class MovieDetailsFragment extends Fragment {
         linearLayout = (LinearLayout) view.findViewById(R.id.baseLinearLayout);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        TextView textView = getTextView("Original Title: " + movies.movies.get(movieIndex).getOriginal_title());
+        TextView textView = getTextView("ORIGINAL TITLE: " + movies.movies.get(movieIndex).getOriginal_title());
         linearLayout.addView(textView);
 
-        textView = getTextView("Overview: " + movies.movies.get(movieIndex).getOverview());
+        textView = getTextView("OVERVIEW: " + movies.movies.get(movieIndex).getOverview());
         linearLayout.addView(textView);
 
-        textView = getTextView("Vote Average: " + movies.movies.get(movieIndex).getVote_average());
+        textView = getTextView("VOTE AVERAGE: " + movies.movies.get(movieIndex).getVote_average());
         linearLayout.addView(textView);
 
-        textView = getTextView("Release Date: " + movies.movies.get(movieIndex).getRelease_date());
+        textView = getTextView("RELEASE DATE: " + movies.movies.get(movieIndex).getRelease_date());
         linearLayout.addView(textView);
 
         String url1 = context.getResources().getString(R.string.base_url) + String.valueOf(movies.movies.get(movieIndex).getId()) +

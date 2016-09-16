@@ -13,7 +13,7 @@ import com.example.iavanish.popularmovies.entities.MoviesList;
  */
 public class AccessDatabase {
 
-    SQLiteDatabase database;
+    private SQLiteDatabase database;
 
     public AccessDatabase(Context context) {
         database = context.openOrCreateDatabase(context.getResources().getString(R.string.database), context.MODE_PRIVATE, null);

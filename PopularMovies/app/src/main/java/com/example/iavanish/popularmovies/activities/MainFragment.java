@@ -37,6 +37,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
     public static class MyFragment extends Fragment {
 
         public static final String ARG_SECTION_NUMBER = "";
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             String url;
