@@ -1,8 +1,11 @@
 package com.example.iavanish.popularmovies.activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +37,12 @@ public class MovieDetailsFragment extends Fragment {
     private CheckBox favourite;
     private static List<String> trailers;
     private static List<String> reviews;
+    private static LinearLayout linearLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class MovieDetailsFragment extends Fragment {
 
         final MoviesList movies = MoviesList.getInstance();
 
-        Bundle bundle = getArguments();
+        final Bundle bundle = getArguments();
         final int movieIndex = bundle.getInt("MovieIndex");
 
         movieThumbnail.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -71,7 +76,7 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
 
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.baseLinearLayout);
+        linearLayout = (LinearLayout) view.findViewById(R.id.baseLinearLayout);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         TextView textView = getTextView("Original Title: " + movies.movies.get(movieIndex).getOriginal_title());
@@ -86,14 +91,26 @@ public class MovieDetailsFragment extends Fragment {
         textView = getTextView("Release Date: " + movies.movies.get(movieIndex).getRelease_date());
         linearLayout.addView(textView);
 
-        String url = context.getResources().getString(R.string.base_url) + String.valueOf(movies.movies.get(movieIndex).getId()) +
+        String url1 = context.getResources().getString(R.string.base_url) + String.valueOf(movies.movies.get(movieIndex).getId()) +
                 context.getResources().getString(R.string.trailer_url) + context.getResources().getString(R.string.apiKey);
 
         RequestQueue queue1 = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 trailers = new JSONParser().getTrailers(response);
+                int i = 1;
+                for (String temp : trailers) {
+                    final String youtubeURI = getResources().getString(R.string.youtubeURL) + temp;
+                    Button button = getButton("Play trailer " + String.valueOf(i++) + " in YouTube App");
+                    linearLayout.addView(button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeURI)));
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -103,21 +120,18 @@ public class MovieDetailsFragment extends Fragment {
         });
         queue1.add(stringRequest1);
 
-        if(trailers != null) {
-            for (String temp : trailers) {
-                Button button = getButton(temp);
-                linearLayout.addView(button);
-            }
-        }
-
-        url = context.getResources().getString(R.string.base_url) + String.valueOf(movies.movies.get(movieIndex).getId()) +
+        String url2 = context.getResources().getString(R.string.base_url) + String.valueOf(movies.movies.get(movieIndex).getId()) +
                 context.getResources().getString(R.string.review_url) + context.getResources().getString(R.string.apiKey);
 
         RequestQueue queue2 = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                trailers = new JSONParser().getReviews(response);
+                reviews = new JSONParser().getReviews(response);
+                for (String temp : reviews) {
+                    TextView textView = getTextView(temp);
+                    linearLayout.addView(textView);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -126,13 +140,6 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
         queue2.add(stringRequest2);
-
-        if(reviews != null) {
-            for (String temp : reviews) {
-                textView = getTextView(temp);
-                linearLayout.addView(textView);
-            }
-        }
 
         return view;
     }
@@ -151,9 +158,9 @@ public class MovieDetailsFragment extends Fragment {
         Button button = new Button(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         params.setMargins(5,60,5,0);
+        params.gravity = Gravity.CENTER;
         button.setLayoutParams(params);
         button.setTextAppearance(context, android.R.style.TextAppearance_Medium);
-        button.setGravity(View.TEXT_ALIGNMENT_CENTER);
         button.setText(text);
         return button;
     }

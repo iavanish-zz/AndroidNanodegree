@@ -65,7 +65,7 @@ public class JSONParser {
                 JSONObject tempJSON = json_array.getJSONObject(i);
                 String author = tempJSON.getString("author");
                 String content = tempJSON.getString("content");
-                String review = author + "\n" + content;
+                String review = "REVIEW BY " + author + ": " + content + "\n";
                 reviews.add(review);
             }
         }
