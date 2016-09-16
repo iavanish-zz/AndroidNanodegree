@@ -8,10 +8,14 @@
         <item>Favourites</item>
     </string-array>
 
-    <string name="apiKey"></string>
+    <string name="apiKey">01b9443ded0d2c3498ee0c8d89f12a00</string>
 
     <string name="popular_url">http://api.themoviedb.org/3/movie/popular?api_key=</string>
     <string name="top_rated_url">http://api.themoviedb.org/3/movie/top_rated?api_key=</string>
+
+    <string name="base_url">http://api.themoviedb.org/3/movie/</string>
+    <string name="trailer_url">/videos?api_key=</string>
+    <string name="review_url">/reviews?api_key=</string>
 
     <string name="posterURL">http://image.tmdb.org/t/p/w500/</string>
     <string name="bigPosterURL">http://image.tmdb.org/t/p/w780/</string>
