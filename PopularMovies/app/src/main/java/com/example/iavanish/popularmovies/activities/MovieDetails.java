@@ -20,6 +20,7 @@ public class MovieDetails extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag("movieDetailsFragment");
         if(fragment != null) {
+            // ensures app doesn't crash on device rotation by re-assigning the previous instance of fragment
             movieDetailsFragment = (MovieDetailsFragment) fragment;
         }
 
