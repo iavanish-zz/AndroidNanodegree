@@ -32,4 +32,10 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnFr
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Nothing to save. The activity will be restarted on orientation change.
+    }
+
 }
