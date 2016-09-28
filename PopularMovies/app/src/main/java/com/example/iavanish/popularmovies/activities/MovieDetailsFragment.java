@@ -29,14 +29,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetailsFragment extends Fragment {
 
     private Context context;
     private View view;
-    private ImageView movieThumbnail;
-    private CheckBox favourite;
+
+    @BindView(R.id.movieThumbnail)
+    ImageView movieThumbnail;
+
+    @BindView(R.id.favourite)
+    CheckBox favourite;
+
     private static List<String> trailers;
     private static List<String> reviews;
+
     private static LinearLayout linearLayout;
 
     @Override
@@ -48,8 +57,7 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_movie_details, container, false);
-        movieThumbnail = (ImageView) view.findViewById(R.id.movieThumbnail);
-        favourite = (CheckBox) view.findViewById(R.id.favourite);
+        ButterKnife.bind(this, view);
 
         final MoviesList movies = MoviesList.getInstance();
 
@@ -107,7 +115,10 @@ public class MovieDetailsFragment extends Fragment {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeURI)));
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeURI));
+                            if(intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                getActivity().startActivity(intent);
+                            }
                         }
                     });
                 }

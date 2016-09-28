@@ -31,7 +31,9 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
     private Context context;
     private ActionBar actionBar;
     private static MoviesList movies;
+
     private static GridView gridView;
+
     private View view;
 
     public static class MyFragment extends Fragment {
