@@ -28,7 +28,7 @@ import com.example.iavanish.popularmovies.util.NetworkConnection;
 
 public class MainFragment extends Fragment implements ActionBar.OnNavigationListener {
 
-    private Context context;
+    private static Context context;
     private ActionBar actionBar;
     private static MoviesList movies;
 
@@ -47,7 +47,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
             movies = MoviesList.getInstance();
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 movies = new AccessDatabase(getActivity()).getMovies(movies);
-                gridView = updateGrid(gridView, movies, getActivity());
+                gridView = updateGrid(gridView, movies);
             }
             else {
                 if (getArguments().getInt(ARG_SECTION_NUMBER) == 0) {
@@ -61,7 +61,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
                     @Override
                     public void onResponse(String response) {
                         movies = new JSONParser().getMovies(movies, response);
-                        gridView = updateGrid(gridView, movies, getActivity());
+                        gridView = updateGrid(gridView, movies);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -75,9 +75,15 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
 
             return gridView;
         }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setRetainInstance(true);
+        }
     }
 
-    private static GridView updateGrid(GridView gridView, MoviesList movies, final Context context) {
+    private static GridView updateGrid(GridView gridView, MoviesList movies) {
         gridView.setAdapter(new ImageAdapter(context, movies));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -92,6 +98,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
