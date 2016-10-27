@@ -48,10 +48,11 @@ public class MovieDetailsFragment extends Fragment {
 
     private static LinearLayout linearLayout;
 
+    private static int movieIndex;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -61,8 +62,13 @@ public class MovieDetailsFragment extends Fragment {
 
         final MoviesList movies = MoviesList.getInstance();
 
-        final Bundle bundle = getArguments();
-        final int movieIndex = bundle.getInt("MovieIndex");
+        if(savedInstanceState != null) {
+            movieIndex = savedInstanceState.getInt("movieIndex");
+        }
+        else {
+            final Bundle bundle = getArguments();
+            movieIndex = bundle.getInt("MovieIndex");
+        }
 
         movieThumbnail.setScaleType(ImageView.ScaleType.FIT_XY);
         String posterURL = getResources().getString(R.string.bigPosterURL) + movies.movies.get(movieIndex).getPoster_path();
@@ -174,6 +180,12 @@ public class MovieDetailsFragment extends Fragment {
         button.setTextAppearance(context, android.R.style.TextAppearance_Medium);
         button.setText(text);
         return button;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("movieIndex", movieIndex);
     }
 
     @Override

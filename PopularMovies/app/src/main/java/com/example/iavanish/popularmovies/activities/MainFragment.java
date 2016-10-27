@@ -82,7 +82,6 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setRetainInstance(true);
         }
 
         @Override
@@ -106,7 +105,6 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override

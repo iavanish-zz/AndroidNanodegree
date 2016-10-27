@@ -37,7 +37,6 @@ public class MovieDetails extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        // Nothing to save
     }
 
 }
