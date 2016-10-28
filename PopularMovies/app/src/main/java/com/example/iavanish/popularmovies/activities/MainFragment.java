@@ -28,11 +28,15 @@ import com.example.iavanish.popularmovies.util.NetworkConnection;
 
 public class MainFragment extends Fragment implements ActionBar.OnNavigationListener {
 
-    private Context context;
+    private static Context context;
     private ActionBar actionBar;
     private static MoviesList movies;
+
     private static GridView gridView;
+
     private View view;
+
+    private static int choice;
 
     public static class MyFragment extends Fragment {
 
@@ -40,15 +44,16 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            int choice = getArguments().getInt(ARG_SECTION_NUMBER);
             String url;
             MoviesList.resetInstance();
             movies = MoviesList.getInstance();
-            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+            if(choice == 2) {
                 movies = new AccessDatabase(getActivity()).getMovies(movies);
-                gridView = updateGrid(gridView, movies, getActivity());
+                gridView = updateGrid(gridView, movies);
             }
             else {
-                if (getArguments().getInt(ARG_SECTION_NUMBER) == 0) {
+                if (choice == 0) {
                     url = getResources().getString(R.string.popular_url) + getResources().getString(R.string.apiKey);
                 } else {
                     url = getResources().getString(R.string.top_rated_url) + getResources().getString(R.string.apiKey);
@@ -59,7 +64,7 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
                     @Override
                     public void onResponse(String response) {
                         movies = new JSONParser().getMovies(movies, response);
-                        gridView = updateGrid(gridView, movies, getActivity());
+                        gridView = updateGrid(gridView, movies);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -73,9 +78,19 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
 
             return gridView;
         }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle savedInstanceState) {
+            super.onSaveInstanceState(savedInstanceState);
+        }
     }
 
-    private static GridView updateGrid(GridView gridView, MoviesList movies, final Context context) {
+    private static GridView updateGrid(GridView gridView, MoviesList movies) {
         gridView.setAdapter(new ImageAdapter(context, movies));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -105,6 +120,9 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
             ArrayAdapter adapter = new ArrayAdapter(actionBar.getThemedContext(), android.R.layout.simple_spinner_item, android.R.id.text1, dropdownValues);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(adapter, this);
+            if(savedInstanceState != null) {
+                actionBar.setSelectedNavigationItem(savedInstanceState.getInt("choice"));
+            }
         }
         return view;
     }
@@ -120,7 +138,14 @@ public class MainFragment extends Fragment implements ActionBar.OnNavigationList
         args.putInt(MyFragment.ARG_SECTION_NUMBER, itemPosition);
         fragment.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        choice = itemPosition;
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("choice", choice);
     }
 
     @Override

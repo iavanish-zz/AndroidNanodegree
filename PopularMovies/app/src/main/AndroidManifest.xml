@@ -14,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.MovieDetails"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity android:name=".activities.MovieDetails">
         </activity>
     </application>
 
